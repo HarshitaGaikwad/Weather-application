@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather application</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #91A4B6, #3C6BA7);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 36px;
+    }
+
+    .weather-icon {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+    }
+
+    .weather-desc {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .temperature {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .location {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    #search-city
+    {
+      width: 50%;
+      height: 35px;
+      border-radius: 2rem;
+      border: none;
+     margin-left: 25%;
+     margin-top: 5%;
+    }
+    /* .top
+    {
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+      background-color: pink;
+    } */
+  </style>
+</head>
+<body>
+ 
+    
+  <input type="text" id="search-city" onchange="fetchdata()" placeholder="Search city..." />
+
+  <div class="container">
+    <h1>Weather App</h1>
+    <img src="clouds.png" alt="Weather Icon" class="weather-icon">
+    <!-- <div class="weather-desc">Sunny</div> -->
+    <div class="temperature">25°C</div>
+    <div class="location"><i class="fas fa-map-marker-alt"></i> New York, USA</div>
+    
+    <!-- <div class="footer">Powered by OpenWeather</div> -->
+  </div>
+
+  <script>
+
+    const search=document.querySelector("#search-city");
+   
+    const temp= document.querySelector('.temperature');
+    const loc=document.querySelector(".location");
+    
+
+    // let display= document.querySelector(".weather-desc");
+    
+    const fetchdata =async ()=>
+    {
+      const searchloc=search.value;
+      // const URL =`https://api.tomorrow.io/v4/weather/realtime?location=${searchloc}&apikey=uJuqbHPOW31rCeHHlEXCC74uCEdpltkc`;
+
+      const URL=`https://api.tomorrow.io/v4/weather/realtime?location=${searchloc}&apikey=uJuqbHPOW31rCeHHlEXCC74uCEdpltkc`;
+
+        let response= await fetch(URL);
+        // console.log(response);
+
+        let data=await response.json();
+        console.log(data);
+        temp.innerHTML=(Math.floor(data.data.values.temperature)+"°C");
+        loc.innerHTML=data.location.name.split(",")[0]; 
+        // display.innerHTML=data;
+    }
+
+    // fetchdata();
+  </script>
+</body>
+</html>
